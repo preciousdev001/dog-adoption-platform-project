@@ -1,7 +1,12 @@
 const express = require("express");
+const cors = require("cors");
+const connectDB = require("./db");
+
 const app = express();
 
-const connectDB = require("./db");
+// global middleware
+app.use(cors());
+app.use(express.json());
 
 // database
 connectDB();
