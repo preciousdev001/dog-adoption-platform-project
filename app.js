@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db");
 const dogRoutes = require("./routes/dog.routes");
+const authRoutes = require("./routes/auth.routes");
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // mount routes
 app.use("/api/dogs", dogRoutes);
+app.use("/api/auth", authRoutes);
 
 // database
 connectDB();

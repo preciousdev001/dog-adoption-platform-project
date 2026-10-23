@@ -39,4 +39,4 @@ const dogSchema = new mongoose.Schema(
 
 const Dog = mongoose.model("Dog", dogSchema);
 
-modules.exports = Dog;
+module.exports = Dog;
