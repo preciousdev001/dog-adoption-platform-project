@@ -57,11 +57,41 @@ exports.getAllDogs = async (req, res) => {
       success: true,
       count: dogs.length,
       total: totalDogs,
-      totalPages: Math.ceil(totalDogs/limit),
-      currentPageL parseInt(page),
+      totalPages: Math.ceil(totalDogs / limit),
+      currentPage: parseInt(page),
       data: dogs,
     });
   } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+exports.deleteDog = async (req, res) => {
+  try {
+    const dogId = req.params.id;
+
+    //find and delete dog by ID
+    const deletedDog = await Dog.findByIdAndDelete(dogId);
+
+    //edge case: if dog doesn't exist
+    if (!deletedDog) {
+      return res.status(404).json({
+        success: false,
+        error: `Dog with id ${dogId} not found`,
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Dog successfully removed from platform",
+      data: deletedDog,
+    });
+  } catch (error) {
+    // invalid mongoDB object format
+    if (error.name === "CastError") {
+      return res
+        .status(400)
+        .json({ success: false, error: "Invalid dog ID format" });
+    }
     res.status(500).json({ success: false, error: error.message });
   }
 };

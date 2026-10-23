@@ -9,4 +9,7 @@ router.post("/", auth, dogController.createDog);
 // GET api/dogs
 router.get("/", dogController.getAllDogs);
 
+// DELETE route
+router.delete("/:id", dogController.deleteDog);
+
 module.exports = router;
